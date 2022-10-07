@@ -52,3 +52,11 @@ jobs:
     # 압축한 프로젝트 S3로 전송
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./practice-deploy.zip s3://be-51-taekgil99/practice-deploy.zip
+
+    # CodeDeploy로 배포
+    - name: Code Deploy
+      run: >
+        aws deploy create-deployment --application-name be-51-Taekgil99 --s3-location bucket=be-51-taekgil99
+        --deployment-config-name CodeDeployDefault.AllAtOnce
+        --deployment-group-name be-51-Taekgil99-group
+        --s3-location bucket=be-51-taekgil99,key=practice-deploy.zip,bundleType=zip
